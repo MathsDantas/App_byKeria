@@ -1,6 +1,5 @@
 package com.example.bykeria.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
@@ -24,14 +23,14 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun YourAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(), // Detecta automaticamente o tema do sistema
+    darkTheme: Boolean = false, // Tema controlado externamente
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
         colorScheme = colors,
-        typography = Typography, // Use a tipografia que já foi configurada
+        typography = Typography, // A tipografia já configurada
         content = content
     )
 }

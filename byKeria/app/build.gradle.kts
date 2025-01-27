@@ -51,6 +51,10 @@ android {
 
 dependencies {
 
+    implementation("androidx.compose.material:material:1.4.3")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha06")
+    implementation ("androidx.compose.runtime:runtime-livedata:<version>")
+    implementation ("androidx.compose.runtime:runtime:1.0.0") // ou versão mais recente
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

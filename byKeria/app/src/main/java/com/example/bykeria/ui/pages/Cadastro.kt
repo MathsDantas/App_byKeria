@@ -49,7 +49,7 @@ fun CadastroScreen(navController: NavController) {
         Surface(modifier = Modifier.fillMaxSize()) {
 
             Image(
-                painter = painterResource(id = R.drawable.detalheposto), // Substitua pelo nome da sua imagem
+                painter = painterResource(id = R.drawable.cadastro), // Substitua pelo nome da sua imagem
                 contentDescription = null,
                 contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
                 modifier = Modifier.fillMaxSize()

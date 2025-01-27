@@ -14,11 +14,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.bykeria.R
 import com.example.bykeria.ui.theme.YourAppTheme
 
 @Composable
-fun LoginScreen(onLoginClicked: (String, String) -> Unit = { _, _ -> }, onForgotPasswordClicked: () -> Unit = {}) {
+fun LoginScreen(
+    navController: NavController,
+    onLoginClicked: (String, String) -> Unit = { _, _ -> },
+    onForgotPasswordClicked: () -> Unit = {}
+)  {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var isDarkTheme by remember { mutableStateOf(false) }
@@ -32,7 +37,7 @@ fun LoginScreen(onLoginClicked: (String, String) -> Unit = { _, _ -> }, onForgot
     ) {
         // Imagem de fundo
         Image(
-            painter = painterResource(id = R.drawable.detalheposto), // Substitua pelo nome da sua imagem
+            painter = painterResource(id = R.drawable.login), // Substitua pelo nome da sua imagem
             contentDescription = null,
             contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
             modifier = Modifier.fillMaxSize()
@@ -104,7 +109,7 @@ fun LoginScreen(onLoginClicked: (String, String) -> Unit = { _, _ -> }, onForgot
 
             // Botão de login
             Button(
-                onClick = { onLoginClicked(email.text, password.text) },
+                onClick = { onLoginClicked(email.text, password.text); navController.navigate("lista_postos") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),
