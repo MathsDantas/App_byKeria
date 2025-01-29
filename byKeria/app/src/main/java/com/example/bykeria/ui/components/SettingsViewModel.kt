@@ -1,14 +1,25 @@
-package com.example.bykeria.ui.pages
+package com.example.bykeria.ui.components
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class SettingsViewModel : ViewModel() {
-    private val _isDarkTheme = MutableStateFlow(false) // Iniciado com o tema claro
-    val isDarkTheme: StateFlow<Boolean> get() = _isDarkTheme
+class SettingsViewModel(context: Context) : ViewModel() {
 
-    fun toggleTheme() {
-        _isDarkTheme.value = !_isDarkTheme.value
+    private val dataStore = SettingsDataStore(context)
+
+    // Fluxo que representa o estado do tema (escuro ou claro)
+    val isDarkTheme: StateFlow<Boolean> = dataStore.isDarkTheme
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    // Método para alterar o estado do tema
+    fun setDarkTheme(isDarkTheme: Boolean) {
+        viewModelScope.launch {
+            dataStore.setDarkTheme(isDarkTheme)
+        }
     }
 }

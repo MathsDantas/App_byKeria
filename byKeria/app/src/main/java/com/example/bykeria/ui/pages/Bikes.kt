@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,12 @@ fun BikesScreen(navController: NavController) {
                 .background(MaterialTheme.colorScheme.background), // Usando a cor do tema
             contentAlignment = Alignment.Center
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.homebg), // Substitua pelo nome da sua imagem
+                contentDescription = null,
+                contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
+                modifier = Modifier.fillMaxSize()
+            )
 
             Column(
                 modifier = Modifier
@@ -60,7 +67,7 @@ fun BikesScreen(navController: NavController) {
                     modifier = Modifier
                         .size(200.dp)
                         .clickable {
-                            navController.navigate("detalhesadu") // Navegação para "detalhesadu"
+                            navController.navigate("detalhe_bikesadu") // Navegação para "detalhesadu"
                         },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp) // Usando CardDefaults para definir a elevação
@@ -95,7 +102,7 @@ fun BikesScreen(navController: NavController) {
                     modifier = Modifier
                         .size(200.dp)
                         .clickable {
-                            navController.navigate("detalhesinf") // Navegação para "detalhesinf"
+                            navController.navigate("detalhe_bikeskid") // Navegação para "detalhesinf"
                         },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp) // Usando CardDefaults para definir a elevação

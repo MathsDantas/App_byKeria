@@ -29,7 +29,6 @@ fun CadastroScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var confirmarSenha by remember { mutableStateOf("") }
-    var isDarkTheme by remember { mutableStateOf(false) }
 
     // Função para validação e cadastro
     val context = LocalContext.current
@@ -45,7 +44,7 @@ fun CadastroScreen(navController: NavController) {
         }
     }
 
-    YourAppTheme(darkTheme = isDarkTheme) {
+
         Surface(modifier = Modifier.fillMaxSize()) {
 
             Image(
@@ -62,10 +61,7 @@ fun CadastroScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Switch(
-                    checked = isDarkTheme,
-                    onCheckedChange = { isDarkTheme = it }
-                )
+
 
                 Text(text = "Cadastre-se!", fontSize = 24.sp, style = MaterialTheme.typography.titleLarge)
 
@@ -159,4 +155,4 @@ fun CadastroScreen(navController: NavController) {
             }
         }
     }
-}
+

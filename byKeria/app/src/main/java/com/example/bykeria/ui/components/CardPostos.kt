@@ -69,11 +69,10 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             )
             Button(
                 onClick = {
-                    navController.navigate("detalhes_postos") // Navega para a tela de lista de postos
+                    navController.navigate("detalhes_postos/${posto.id}") // Inclui o ID do posto na rota
                 },
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .width(250.dp),
+                modifier = Modifier.width(250.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -81,6 +80,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             ) {
                 Text(text = "Mais Informações", fontSize = 25.sp)
             }
+
         }
     }
 }

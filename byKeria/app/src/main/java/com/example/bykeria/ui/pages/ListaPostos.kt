@@ -20,7 +20,7 @@ import com.example.bykeria.ui.mocks.postosList
 @Composable
 fun PostosScreen(navController: NavController) {
     MainScreenLayout(navController = navController) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
+        Box(modifier = Modifier.padding(top = 24.dp)) {
             // Imagem de fundo
             Image(
                 painter = painterResource(id = R.drawable.login), // Substitua pelo nome da sua imagem

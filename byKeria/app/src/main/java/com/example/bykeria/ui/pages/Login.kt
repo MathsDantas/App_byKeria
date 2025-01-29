@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -26,9 +27,8 @@ fun LoginScreen(
 )  {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
-    var isDarkTheme by remember { mutableStateOf(false) }
 
-    YourAppTheme(darkTheme = isDarkTheme) {
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -50,10 +50,7 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
-            Switch(
-                checked = isDarkTheme,
-                onCheckedChange = { isDarkTheme = it }
-            )
+
             // Mensagem de título
             Text(
                 text = "Faça seu Login!",
@@ -115,7 +112,7 @@ fun LoginScreen(
                     .padding(top = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary, // Cor de fundo do botão
-                    contentColor = MaterialTheme.colorScheme.onSurface // Cor do texto
+                    contentColor = Color.Black // Cor do texto
                 )
 
             ) {
@@ -124,4 +121,4 @@ fun LoginScreen(
             }
         }
     }
-} } }
+} }
