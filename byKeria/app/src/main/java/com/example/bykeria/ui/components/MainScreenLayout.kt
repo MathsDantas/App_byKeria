@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -43,7 +44,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                 title = {
                     Box(
                         modifier = Modifier.fillMaxHeight(),
-                        contentAlignment = androidx.compose.ui.Alignment.Center // Centraliza verticalmente
+                        contentAlignment = androidx.compose.ui.Alignment.Center
                     ) {
                         Text(
                             text = "byKeria",
@@ -54,7 +55,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                         )
                     }
                 },
-                modifier = Modifier.height(40.dp), // Define uma altura menor
+                modifier = Modifier.height(40.dp),
                 colors = TopAppBarDefaults.smallTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -88,7 +89,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                         DropdownMenuItem(
                             onClick = {
                                 expanded = false
-                                navController.navigate("FAQ")
+                                navController.navigate("faq_screen")
                             },
                             text = { Text("FAQ") }
                         )
@@ -106,7 +107,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
 
         bottomBar = {
             NavigationBar(
-                modifier = Modifier.height(40.dp), // Ajusta a altura da barra para 40.dp
+                modifier = Modifier.height(40.dp),
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
@@ -114,13 +115,13 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                     onClick = {
                         navController.navigate("settings")
                     },
-                    selected = false,  // Adicionando selected false
+                    selected = false,
                     icon = {
                         Icon(
                             painter = painterResource(id = R.drawable.settings),
                             contentDescription = "Settings",
                             modifier = Modifier.size(24.dp),
-                            tint = Color.Black // Define a cor do ícone diretamente
+                            tint = Color.Black
                         )
                     }
                 )
@@ -129,13 +130,13 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                     onClick = {
                         navController.navigate("lista_postos")
                     },
-                    selected = false,  // Adicionando selected false
+                    selected = false,
                     icon = {
                         Icon(
                             painter = painterResource(id = R.drawable.home),
                             contentDescription = "Home",
                             modifier = Modifier.size(24.dp),
-                            tint = Color.Black // Define a cor do ícone diretamente
+                            tint = Color.Black
                         )
                     }
                 )
@@ -144,19 +145,25 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                     onClick = {
                         navController.navigate("bikes")
                     },
-                    selected = false,  // Adicionando selected false
+                    selected = false,
                     icon = {
                         Icon(
                             painter = painterResource(id = R.drawable.bike2),
                             contentDescription = "Other",
                             modifier = Modifier.size(35.dp),
-                            tint = Color.Black // Define a cor do ícone diretamente
+                            tint = Color.Black
                         )
                     }
                 )
             }
         },
 
-        content = { paddingValues -> content(paddingValues) }
+        content = { paddingValues ->
+            // **Adiciona os paddingValues ao conteúdo para evitar sobreposição com TopAppBar**
+            Box(modifier = Modifier.padding(paddingValues)) {
+                content(paddingValues)
+            }
+        }
     )
 }
+

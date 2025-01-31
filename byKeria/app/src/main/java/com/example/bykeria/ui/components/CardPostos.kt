@@ -1,5 +1,6 @@
 package com.example.bykeria.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -69,7 +70,8 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             )
             Button(
                 onClick = {
-                    navController.navigate("detalhes_postos/${posto.id}") // Inclui o ID do posto na rota
+                    Log.d("Navigation", "Navigating to detalhesPostos/${posto.id}")
+                    navController.navigate("detalhesPosto/${posto.id}")
                 },
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.width(250.dp),
@@ -78,7 +80,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
                     contentColor = Color.Black
                 )
             ) {
-                Text(text = "Mais Informações", fontSize = 25.sp)
+                Text(text = "Mais Informações", fontSize = 20.sp)
             }
 
         }

@@ -4,69 +4,98 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.bykeria.R
 import com.example.bykeria.ui.components.MainScreenLayout
+import com.example.bykeria.ui.components.SettingsDataStore
+import com.example.bykeria.ui.components.SettingsViewModel
 import com.example.bykeria.ui.mocks.Postos
 import com.example.bykeria.ui.mocks.postosList
+import kotlinx.coroutines.launch
 
 @Composable
-fun DetalhesPostoScreen(postoId: Int?, navController: NavController) {
+fun DetalhesPostoScreen(
+    postoId: Int?,
+    navController: NavController,
+    settingsDataStore: SettingsDataStore // Agora usa SettingsDataStore corretamente
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val favorites by settingsDataStore.favoritePostos.collectAsState(initial = emptySet())
+    val isFavorite = postoId in favorites
+
     MainScreenLayout(navController = navController) { paddingValues ->
-        // Simula buscar os dados com base no ID
         val posto = getPostoById(postoId)
-        // Função para buscar os dados do posto
+
         if (posto != null) {
-            Image(
-                painter = painterResource(id = R.drawable.cadastro), // Substitua pelo nome da sua imagem
-                contentDescription = null,
-                contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
-                modifier = Modifier.fillMaxSize()
-            )
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                // Imagem do posto
                 Image(
                     painter = painterResource(id = posto.imageRes),
                     contentDescription = "Imagem do posto",
-                    modifier = Modifier
-                        .size(500.dp)
+                    modifier = Modifier.size(500.dp)
                 )
                 Spacer(modifier = Modifier.padding(8.dp))
-                // Nome da unidade
+
                 Text(
                     text = posto.unidade,
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
-                // Endereço
+
                 Text(
                     text = posto.endereco,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
                 )
                 Spacer(modifier = Modifier.padding(16.dp))
-                // Quantidade de bikes
+
                 Text(
                     text = "Quantidade de bikes: ${posto.quantidadeBikes}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
                 )
+
+                Spacer(modifier = Modifier.padding(16.dp))
+
+                // Botão de Favorito
+                IconButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            postoId?.let { settingsDataStore.toggleFavoritePosto(it) }
+                        }
+                    }
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                        contentDescription = "Favoritar Posto",
+                        tint = if (isFavorite) Color.Red else Color.Gray
+                    )
+                }
             }
         } else {
             Text(
@@ -78,9 +107,6 @@ fun DetalhesPostoScreen(postoId: Int?, navController: NavController) {
     }
 }
 
-    // Função simulada para buscar os dados de um posto
-    fun getPostoById(id: Int?): Postos? {
-        return postosList.find { it.id == id } // Retorna o posto correspondente
-    }
-
-
+fun getPostoById(id: Int?): Postos? {
+    return postosList.find { it.id == id } // Retorna o posto correspondente
+}
