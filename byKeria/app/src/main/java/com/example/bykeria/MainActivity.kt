@@ -1,5 +1,6 @@
 package com.example.bykeria
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,17 +12,40 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.compose.rememberNavController
-import com.example.bykeria.ui.components.AppNavigation
-import com.example.bykeria.ui.theme.YourAppTheme
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
+import com.example.bykeria.notifications.NotificationHelper
+import com.example.bykeria.notifications.NotificationScheduler
+import com.example.bykeria.ui.components.AppNavigation
 import com.example.bykeria.ui.components.SettingsDataStore
 import com.example.bykeria.ui.components.SettingsViewModel
 import com.example.bykeria.ui.components.SettingsViewModelFactory
+import com.example.bykeria.ui.theme.YourAppTheme
+
+import android.Manifest
+import android.content.pm.PackageManager
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Criar canal de notificações
+        NotificationHelper.createNotificationChannel(this)
+
+        // Agendar notificações dos postos
+        NotificationScheduler.schedulePostoNotifications(this)
+
+        // Solicitar permissão para notificações (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
+
         setContent {
             val context = LocalContext.current
             val settingsDataStore = SettingsDataStore(context)
@@ -38,6 +62,8 @@ fun AppContent(settingsDataStore: SettingsDataStore) {
     )
 
     val isDarkTheme by settingsViewModel.isDarkTheme.collectAsState()
+
+
 
     YourAppTheme(darkTheme = isDarkTheme) {
         val navController = rememberNavController()
