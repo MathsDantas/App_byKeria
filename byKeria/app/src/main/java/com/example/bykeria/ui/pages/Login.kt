@@ -37,9 +37,9 @@ fun LoginScreen(
     ) {
         // Imagem de fundo
         Image(
-            painter = painterResource(id = R.drawable.login), // Substitua pelo nome da sua imagem
+            painter = painterResource(id = R.drawable.login),
             contentDescription = null,
-            contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
+            contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
         Column(
@@ -55,7 +55,7 @@ fun LoginScreen(
             Text(
                 text = "Faça seu Login!",
                 style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
@@ -63,7 +63,7 @@ fun LoginScreen(
             Text(
                 text = "Email",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.fillMaxWidth()
             )
             TextField(
@@ -79,7 +79,7 @@ fun LoginScreen(
             Text(
                 text = "Senha",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.fillMaxWidth()
             )
             TextField(

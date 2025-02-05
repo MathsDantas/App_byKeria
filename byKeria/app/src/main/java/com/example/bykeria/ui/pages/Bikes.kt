@@ -95,6 +95,7 @@ fun BikesScreen(navController: NavController) {
                 Text(
                     text = "Bikes para adultos",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     textAlign = TextAlign.Center
                 )
 
@@ -131,6 +132,7 @@ fun BikesScreen(navController: NavController) {
                 Text(
                     text = "Bikes para crianças",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     textAlign = TextAlign.Center
                 )
             }

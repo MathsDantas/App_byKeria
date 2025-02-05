@@ -40,11 +40,11 @@ fun SettingsScreen(navController: NavHostController) {
                 content = { paddingValues ->
                     Box(
                         modifier = Modifier
-                            .fillMaxSize() // Preenche a tela
+                            .fillMaxSize()
                     ) {
                         // A imagem de fundo
                         Image(
-                            painter = painterResource(id = R.drawable.login), // Substitua pelo nome da sua imagem
+                            painter = painterResource(id = R.drawable.login),
                             contentDescription = null,
                             contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
                             modifier = Modifier.fillMaxSize()
@@ -60,12 +60,13 @@ fun SettingsScreen(navController: NavHostController) {
                             Text(
                                 text = "Modo de Cor",
                                 style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.padding(8.dp)
                             )
                             Row(
                                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
                             ) {
-                                Text(text = if (isDarkTheme) "Escuro" else "Claro")
+                                Text(text = if (isDarkTheme) "Escuro" else "Claro", color = MaterialTheme.colorScheme.onPrimary)
                                 Spacer(modifier = Modifier.width(16.dp))
                                 Switch(
                                     checked = isDarkTheme,
