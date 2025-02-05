@@ -43,7 +43,7 @@ fun BikesScreen(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.homebg), // Substitua pelo nome da sua imagem
+                painter = painterResource(id = R.drawable.homebg),
                 contentDescription = null,
                 contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
                 modifier = Modifier.fillMaxSize()
@@ -59,6 +59,7 @@ fun BikesScreen(navController: NavController) {
                 Text(
                     text = "Dê uma olhada nas nossas Bikes!",
                     style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     textAlign = TextAlign.Center
                 )
 

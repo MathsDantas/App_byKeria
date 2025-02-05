@@ -37,7 +37,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             .padding(3.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary // Cor de fundo do Card
+            containerColor = MaterialTheme.colorScheme.onBackground // Cor de fundo do Card
         ),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -59,6 +59,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
                 text = posto.unidade,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 37.sp
             )
             // Endereço
@@ -66,6 +67,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
                 text = posto.endereco,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 23.sp
             )
             Button(

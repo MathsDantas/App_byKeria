@@ -23,7 +23,7 @@ fun BikesAduListItem(
             .fillMaxWidth()
             .padding(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground)
     ) {
         Column(
             modifier = Modifier

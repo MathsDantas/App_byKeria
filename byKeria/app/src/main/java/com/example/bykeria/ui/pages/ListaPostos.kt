@@ -23,9 +23,9 @@ fun PostosScreen(navController: NavController) {
         Box(modifier = Modifier.padding(top = 24.dp)) {
             // Imagem de fundo
             Image(
-                painter = painterResource(id = R.drawable.login), // Substitua pelo nome da sua imagem
+                painter = painterResource(id = R.drawable.login),
                 contentDescription = null,
-                contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
             LazyColumn(
