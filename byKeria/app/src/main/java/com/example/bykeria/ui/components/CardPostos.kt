@@ -79,7 +79,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
                 modifier = Modifier.width(250.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onSurface
+                    contentColor = Color.Black
                 )
             ) {
                 Text(text = "Mais Informações", fontSize = 20.sp)

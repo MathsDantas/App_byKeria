@@ -60,7 +60,7 @@ fun DetalhesPostoScreen(
                 Text(
                     text = posto.unidade,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -68,7 +68,7 @@ fun DetalhesPostoScreen(
                 Text(
                     text = posto.endereco,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 )
                 Spacer(modifier = Modifier.padding(16.dp))
@@ -76,7 +76,7 @@ fun DetalhesPostoScreen(
                 Text(
                     text = "Quantidade de bikes: ${posto.quantidadeBikes}",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 )
 

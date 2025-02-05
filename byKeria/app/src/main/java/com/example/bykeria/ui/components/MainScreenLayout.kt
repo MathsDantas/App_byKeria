@@ -79,13 +79,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                             },
                             text = { Text("Configurações") }
                         )
-                        DropdownMenuItem(
-                            onClick = {
-                                expanded = false
-                                navController.navigate("sobre")
-                            },
-                            text = { Text("Sobre") }
-                        )
+
                         DropdownMenuItem(
                             onClick = {
                                 expanded = false
