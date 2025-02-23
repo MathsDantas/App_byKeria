@@ -7,29 +7,46 @@ import com.example.bykeria.notifications.NotificationHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// Criação do DataStore no contexto
+// Criando DataStore no contexto
 private val Context.dataStore by preferencesDataStore(name = "settings_preferences")
 
 class SettingsDataStore(private val context: Context) {
 
-    // Chaves de armazenamento no DataStore
+    // 🔹 Chaves de armazenamento
     private val DARK_THEME_KEY = booleanPreferencesKey("dark_theme")
     private val FAVORITE_POSTOS_KEY = stringPreferencesKey("favorite_postos")
+    private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token") // 🔹 Adicionado para armazenar o token
 
-    // Fluxo que observa as mudanças no tema
-    val isDarkTheme: Flow<Boolean> = context.dataStore.data
-        .map { preferences ->
-            preferences[DARK_THEME_KEY] ?: false
+    // 🔹 Salvar o token JWT no DataStore
+    suspend fun saveToken(token: String) {
+        context.dataStore.edit { preferences ->
+            preferences[JWT_TOKEN_KEY] = token
         }
+    }
 
-    // Função para salvar o estado do tema
+    // 🔹 Recuperar o token JWT
+    val tokenFlow: Flow<String?> = context.dataStore.data.map { preferences ->
+        preferences[JWT_TOKEN_KEY]
+    }
+
+    // 🔹 Remover o token JWT (Logout)
+    suspend fun clearToken() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(JWT_TOKEN_KEY)
+        }
+    }
+
+    // Fluxo para tema escuro
+    val isDarkTheme: Flow<Boolean> = context.dataStore.data
+        .map { preferences -> preferences[DARK_THEME_KEY] ?: false }
+
     suspend fun setDarkTheme(isDarkTheme: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[DARK_THEME_KEY] = isDarkTheme
         }
     }
 
-    // Fluxo que observa os postos favoritos
+    // Fluxo para postos favoritos
     val favoritePostos: Flow<Set<Int>> = context.dataStore.data
         .map { preferences ->
             preferences[FAVORITE_POSTOS_KEY]
@@ -38,7 +55,6 @@ class SettingsDataStore(private val context: Context) {
                 ?.toSet() ?: emptySet()
         }
 
-    // Função para favoritar/desfavoritar um posto
     suspend fun toggleFavoritePosto(postoId: Int) {
         context.dataStore.edit { preferences ->
             val currentFavorites = preferences[FAVORITE_POSTOS_KEY]
@@ -51,7 +67,7 @@ class SettingsDataStore(private val context: Context) {
             } else {
                 currentFavorites.add(postoId) // Adiciona se não for favorito
 
-                // Exibe notificação ao favoritar um posto
+                // Notificação ao favoritar posto
                 NotificationHelper.showNotification(
                     context,
                     "Posto Favoritado",

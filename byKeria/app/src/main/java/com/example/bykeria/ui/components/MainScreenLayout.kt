@@ -92,7 +92,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                                 expanded = false
                                 navController.navigate("home_screen")
                             },
-                            text = { Text("Sair") }
+                            text = { Text("Logout") }
                         )
                     }
                 }

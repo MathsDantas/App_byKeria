@@ -1,12 +1,8 @@
 package com.example.bykeria.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.bykeria.ui.mocks.Postos
+import com.example.bykeria.R
+import com.example.bykeria.data.model.Postos
 
 @Composable
 fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = Modifier) {
@@ -36,9 +33,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             .fillMaxWidth()
             .padding(3.dp),
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onBackground // Cor de fundo do Card
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
@@ -46,35 +41,31 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Imagem do posto
+
             Image(
-                painter = painterResource(id = posto.imageRes),
-                contentDescription = "Imagem do posto ${posto.unidade}",
+                painter = painterResource(R.drawable.posto2),
+                contentDescription = "Imagem do posto",
                 modifier = Modifier
                     .fillMaxWidth()
                     .size(150.dp)
             )
-            // Nome da unidade
+
             Text(
-                text = posto.unidade,
+                text = posto.nameUnidade,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 37.sp
+                fontSize = 30.sp
             )
-            // Endereço
             Text(
                 text = posto.endereco,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = 23.sp
+                fontSize = 20.sp
             )
             Button(
-                onClick = {
-                    Log.d("Navigation", "Navigating to detalhesPostos/${posto.id}")
-                    navController.navigate("detalhesPosto/${posto.id}")
-                },
+                onClick = { navController.navigate("detalhes_posto/${posto.id}") },
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.width(250.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -84,7 +75,7 @@ fun PostoCard(posto: Postos, navController: NavController, modifier: Modifier = 
             ) {
                 Text(text = "Mais Informações", fontSize = 20.sp)
             }
-
         }
     }
 }
+

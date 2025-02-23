@@ -25,6 +25,9 @@ import com.example.bykeria.ui.theme.YourAppTheme
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
+import com.example.bykeria.viewmodel.LoginViewModel
+import com.example.bykeria.viewmodel.LoginViewModelFactory
 
 
 class MainActivity : ComponentActivity() {
@@ -63,15 +66,22 @@ fun AppContent(settingsDataStore: SettingsDataStore) {
 
     val isDarkTheme by settingsViewModel.isDarkTheme.collectAsState()
 
-
-
     YourAppTheme(darkTheme = isDarkTheme) {
         val navController = rememberNavController()
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            AppNavigation(navController, settingsDataStore)
+            // Log para garantir que o LoginViewModel está sendo criado corretamente
+            val LoginViewModel: LoginViewModel = viewModel(
+                factory = LoginViewModelFactory(settingsDataStore)
+            )
+            Log.d("AppContent", "LoginViewModel criado com sucesso")
+
+            AppNavigation(navController, settingsDataStore) // Passar o SettingsDataStore
         }
     }
 }
+
+
+

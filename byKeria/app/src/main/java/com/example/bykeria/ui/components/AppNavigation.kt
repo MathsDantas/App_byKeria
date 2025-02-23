@@ -13,15 +13,19 @@ fun AppNavigation(navController: NavHostController, settingsDataStore: SettingsD
     NavHost(navController = navController, startDestination = "splash") {
         composable("splash") { SplashScreen(navController) }
         composable("home_screen") { HomeScreen(navController) }
-        composable("login_screen") { LoginScreen(navController) }
+        composable("login_screen") { LoginScreen(navController, settingsDataStore) }
         composable("cadastro_screen") { CadastroScreen(navController) }
         composable("faq_screen") { FaqScreen(navController) }
-        composable("lista_postos") { PostosScreen(navController) }
+        composable("lista_postos") { PostosScreen(navController, settingsDataStore) }
         composable("settings") { SettingsScreen(navController) }
         composable("bikes") { BikesScreen(navController) }
-        composable("detalhesPosto/{postoId}") { backStackEntry ->
+        composable("detalhes_posto/{postoId}") { backStackEntry ->
             val postoId = backStackEntry.arguments?.getString("postoId")?.toIntOrNull()
-            DetalhesPostoScreen(postoId, navController, settingsDataStore)
+            DetalhesPostoScreen(
+                postoId = postoId,
+                navController = navController,
+                settingsDataStore = settingsDataStore
+            )
         }
         composable("detalhe_bikeskid") { BikesKidDetailsScreen(navController, bikes = bikesKidList) }
         composable("detalhe_bikesadu") { BikesAduDetailsScreen(navController, bikes = bikesAduList) }

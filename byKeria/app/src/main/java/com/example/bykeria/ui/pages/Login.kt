@@ -16,14 +16,21 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bykeria.R
+import com.example.bykeria.ui.components.SettingsDataStore
 import com.example.bykeria.viewmodel.LoginViewModel
+import com.example.bykeria.viewmodel.LoginViewModelFactory
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
     navController: NavController,
+    settingsDataStore: SettingsDataStore // Passar o SettingsDataStore como parâmetro
 ) {
-    val viewModel: LoginViewModel = viewModel()
+    // Usar a LoginViewModelFactory para criar o ViewModel
+    val viewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(settingsDataStore)
+    )
+
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var loginError by remember { mutableStateOf(false) }
