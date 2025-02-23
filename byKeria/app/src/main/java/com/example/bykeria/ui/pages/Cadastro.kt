@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -17,42 +18,72 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bykeria.R
+import com.example.bykeria.data.model.CadastroViewModel
 import com.example.bykeria.ui.theme.YourAppTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun CadastroScreen(navController: NavController) {
-    // Variáveis para os campos de entrada
+    val viewModel: CadastroViewModel = viewModel()
+
     var nome by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var confirmarSenha by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
 
-    // Função para validação e cadastro
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
-    // Exibindo Toast dentro de uma função composable
     fun onCadastrarClicked() {
         if (senha != confirmarSenha) {
-            Toast.makeText(context, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
+            scope.launch {
+                snackbarHostState.showSnackbar("As senhas não coincidem", duration = SnackbarDuration.Short)
+            }
         } else {
-            // Adicionar a lógica de cadastro aqui
-            // Exemplo: enviar os dados para a API ou salvar localmente
-            Toast.makeText(context, "Conta criada com sucesso!", Toast.LENGTH_SHORT).show()
+            isLoading = true
+            viewModel.cadastrar(
+                name = nome,
+                username = username,
+                email = email,
+                password = senha,
+                onSuccess = {
+                    scope.launch {
+                        val job = launch {
+                            snackbarHostState.showSnackbar("Conta criada com sucesso!", withDismissAction = false)
+                        }
+                        delay(2000L)
+                        job.cancel()
+                        navController.navigate("home_screen")
+                    }
+                },
+
+                onError = { errorMessage ->
+                    isLoading = false
+                    scope.launch {
+                        val message = errorMessage.ifBlank { "Erro ao criar conta" }
+                        snackbarHostState.showSnackbar(message, duration = SnackbarDuration.Short)
+                    }
+                }
+            )
         }
     }
 
-
-        Surface(modifier = Modifier.fillMaxSize()) {
-
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             Image(
-                painter = painterResource(id = R.drawable.cadastro), // Substitua pelo nome da sua imagem
+                painter = painterResource(id = R.drawable.cadastro),
                 contentDescription = null,
-                contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -60,48 +91,44 @@ fun CadastroScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
-
-
                 Text(text = "Cadastre-se!", fontSize = 24.sp, style = MaterialTheme.typography.titleLarge)
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // Campo Nome
                 TextField(
                     value = nome,
                     onValueChange = { nome = it },
                     label = { Text("Nome") },
                     modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Campo Username
                 TextField(
                     value = username,
                     onValueChange = { username = it },
                     label = { Text("Username") },
                     modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Campo Email
                 TextField(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email") },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Campo Senha
                 TextField(
                     value = senha,
                     onValueChange = { senha = it },
@@ -109,12 +136,12 @@ fun CadastroScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
                     visualTransformation = PasswordVisualTransformation(),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Campo Confirmar Senha
                 TextField(
                     value = confirmarSenha,
                     onValueChange = { confirmarSenha = it },
@@ -122,22 +149,26 @@ fun CadastroScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
                     visualTransformation = PasswordVisualTransformation(),
-                    singleLine = true
+                    singleLine = true,
+                    enabled = !isLoading
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Botão Criar Conta
-                Button(
-                    onClick = { onCadastrarClicked() },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "Criar Conta", fontSize = 18.sp)
+                if (isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    Button(
+                        onClick = { onCadastrarClicked() },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !isLoading
+                    ) {
+                        Text(text = "Criar Conta", fontSize = 18.sp, color = Color.Black)
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Link para fazer login
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -147,12 +178,23 @@ fun CadastroScreen(navController: NavController) {
                         text = "Fazer Login",
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.clickable {
-                            navController.navigate("login_screen") // Substitua pelo nome correto da rota de login
+                        modifier = Modifier.clickable(enabled = !isLoading) {
+                            navController.navigate("login_screen")
                         }
                     )
                 }
             }
+
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 32.dp)
+            )
         }
     }
+}
+
+
+
 
