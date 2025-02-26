@@ -1,5 +1,7 @@
 package com.example.bykeria.ui.pages
 
+import android.content.Context
+import android.media.MediaPlayer
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -21,14 +23,22 @@ import com.example.bykeria.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController, context: Context) {
     var fadeOut by remember { mutableStateOf(false) }
 
-    // Exibindo o logo por 2 segundos e depois ativando o fadeOut
+    // Inicializa o MediaPlayer
+    val mediaPlayer = remember {
+        MediaPlayer.create(context, R.raw.bykeria).apply {
+            isLooping = false // Não repetir o áudio
+            start() // Inicia o áudio
+        }
+    }
+
+    // Exibindo o logo por 2.5 segundos e depois ativando o fadeOut
     LaunchedEffect(Unit) {
-        delay(2000)
+        delay(2500) // 2.5 segundos de exibição
         fadeOut = true
-        delay(500)   // Tempo de animação de fadeOut
+        delay(500)   // Tempo de animação de fadeOut (totalizando 3 segundos)
         navController.navigate("home_screen") {
             popUpTo("splash") { inclusive = true }
         }
@@ -58,7 +68,6 @@ fun SplashScreen(navController: NavController) {
                     modifier = Modifier.size(200.dp) // Tamanho da logo
                 )
 
-
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "byKeria", // Texto desejado
@@ -68,6 +77,13 @@ fun SplashScreen(navController: NavController) {
                     )
                 )
             }
+        }
+    }
+
+    // Libera o MediaPlayer quando o composable é desmontado
+    DisposableEffect(Unit) {
+        onDispose {
+            mediaPlayer.release() // Libera os recursos do MediaPlayer
         }
     }
 }

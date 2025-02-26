@@ -28,14 +28,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.bykeria.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreenLayout(navController: NavController, content: @Composable (PaddingValues) -> Unit) {
+    val context = LocalContext.current
+    val settingsDataStore = SettingsDataStore(context)
     var expanded by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -89,8 +95,16 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                         )
                         DropdownMenuItem(
                             onClick = {
-                                expanded = false
-                                navController.navigate("home_screen")
+                                expanded = false // Fecha o menu dropdown
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    settingsDataStore.clearToken()
+                                    navController.navigate("home_screen") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                        launchSingleTop = true
+                                    }
+                                }
                             },
                             text = { Text("Logout") }
                         )

@@ -26,6 +26,10 @@ import com.example.bykeria.ui.theme.YourAppTheme
 import android.Manifest
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.example.bykeria.viewmodel.LoginViewModel
 import com.example.bykeria.viewmodel.LoginViewModelFactory
 
@@ -61,10 +65,11 @@ class MainActivity : ComponentActivity() {
 fun AppContent(settingsDataStore: SettingsDataStore) {
     val context = LocalContext.current
     val settingsViewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(context)
+        factory = SettingsViewModelFactory(context) // Passa o contexto para a Factory
     )
 
-    val isDarkTheme by settingsViewModel.isDarkTheme.collectAsState()
+    // Forneça um valor inicial para isDarkTheme
+    val isDarkTheme by settingsViewModel.isDarkTheme.collectAsState(initial = false)
 
     YourAppTheme(darkTheme = isDarkTheme) {
         val navController = rememberNavController()

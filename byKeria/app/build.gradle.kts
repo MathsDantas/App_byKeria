@@ -52,6 +52,14 @@ android {
 dependencies {
 
 
+    implementation ("com.google.maps.android:maps-compose:2.11.4")
+
+    // Dependência do Play Services Maps
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+
+    // Dependência para permissões (opcional, mas recomendado)
+    implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
+
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
@@ -60,7 +68,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.4.3")
     implementation("androidx.compose.material3:material3:1.2.0-alpha06")
     implementation ("androidx.compose.runtime:runtime-livedata:<version>")
-    implementation ("androidx.compose.runtime:runtime:1.0.0") // ou versão mais recenteimplementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation ("androidx.compose.runtime:runtime:1.0.0")
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("androidx.datastore:datastore-preferences-core:1.0.0")
     implementation("androidx.core:core-ktx:1.12.0")

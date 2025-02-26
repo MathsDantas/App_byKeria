@@ -99,7 +99,12 @@ fun LoginScreen(
                             viewModel.login(email.text, password.text) { success ->
                                 isLoading = false
                                 if (success) {
-                                    navController.navigate("lista_postos")
+                                    navController.navigate("lista_postos") {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                        launchSingleTop = true
+                                    }
                                 } else {
                                     loginError = true
                                     scope.launch {

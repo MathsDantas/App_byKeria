@@ -11,11 +11,23 @@ import kotlinx.coroutines.flow.map
 private val Context.dataStore by preferencesDataStore(name = "settings_preferences")
 
 class SettingsDataStore(private val context: Context) {
-
     // 🔹 Chaves de armazenamento
     private val DARK_THEME_KEY = booleanPreferencesKey("dark_theme")
+    private val AUTO_THEME_KEY = booleanPreferencesKey("auto_theme") // Nova chave para o modo automático
     private val FAVORITE_POSTOS_KEY = stringPreferencesKey("favorite_postos")
-    private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token") // 🔹 Adicionado para armazenar o token
+    private val JWT_TOKEN_KEY = stringPreferencesKey("jwt_token")
+
+    // 🔹 Fluxo para o modo automático
+    val isAutoTheme: Flow<Boolean> = context.dataStore.data
+        .map { preferences -> preferences[AUTO_THEME_KEY] ?: false }
+
+    // 🔹 Salvar o modo automático
+    suspend fun setAutoTheme(isAutoTheme: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[AUTO_THEME_KEY] = isAutoTheme
+        }
+    }
+
 
     // 🔹 Salvar o token JWT no DataStore
     suspend fun saveToken(token: String) {

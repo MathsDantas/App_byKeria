@@ -60,7 +60,12 @@ fun CadastroScreen(navController: NavController) {
                         }
                         delay(2000L)
                         job.cancel()
-                        navController.navigate("home_screen")
+                        navController.navigate("home_screen") {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
                     }
                 },
 
@@ -179,7 +184,12 @@ fun CadastroScreen(navController: NavController) {
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable(enabled = !isLoading) {
-                            navController.navigate("login_screen")
+                            navController.navigate("login_screen") {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
                         }
                     )
                 }

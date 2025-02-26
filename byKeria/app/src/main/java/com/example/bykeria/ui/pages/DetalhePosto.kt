@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -34,10 +36,13 @@ import com.example.bykeria.R
 import com.example.bykeria.data.model.Postos
 import com.example.bykeria.data.network.RetrofitInstance
 import com.example.bykeria.ui.components.MainScreenLayout
+import com.example.bykeria.ui.components.PostoMap
 import com.example.bykeria.ui.components.SettingsDataStore
+import com.example.bykeria.ui.mocks.getMockCoordinates
 import com.example.bykeria.ui.mocks.postosList
 import com.example.bykeria.viewmodel.DetalhesPostoViewModel
 import com.example.bykeria.viewmodel.DetalhesPostoViewModelFactory
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,6 +63,9 @@ fun DetalhesPostoScreen(
     LaunchedEffect(postoId) {
         postoId?.let { viewModel.fetchPostoDetalhes(it) }
     }
+
+    // Obter coordenadas mockadas com base no ID do posto
+    val postoCoordinates = postoId?.let { getMockCoordinates(it) } ?: LatLng(0.0, 0.0)
 
     MainScreenLayout(navController = navController) { paddingValues ->
         if (isLoading) {
@@ -88,13 +96,17 @@ fun DetalhesPostoScreen(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Imagem do posto (proporção original)
                 Image(
                     painter = painterResource(R.drawable.posto2),
                     contentDescription = "Imagem do posto",
-                    modifier = Modifier.size(400.dp) // Reduzi o tamanho da imagem
+                    modifier = Modifier
+                        .fillMaxWidth() // Ocupa a largura máxima disponível
+                        .aspectRatio(344f / 130f) // Mantém a proporção original (344x130)
+                        .padding(vertical = 8.dp) // Espaçamento vertical menor
                 )
 
-                Spacer(modifier = Modifier.padding(1.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(4.dp)) // Espaçamento menor
 
                 Text(
                     text = posto!!.nameUnidade,
@@ -103,7 +115,7 @@ fun DetalhesPostoScreen(
                         fontSize = 30.sp // Aumentei o tamanho da fonte
                     )
                 )
-                Spacer(modifier = Modifier.padding(15.dp))
+                Spacer(modifier = Modifier.padding(8.dp)) // Espaçamento menor
 
                 Text(
                     text = posto!!.endereco,
@@ -112,7 +124,7 @@ fun DetalhesPostoScreen(
                         fontSize = 24.sp // Aumentei o tamanho da fonte
                     )
                 )
-                Spacer(modifier = Modifier.padding(10.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(8.dp)) // Espaçamento menor
 
                 // Quantidade de bikes adultas
                 val bikesAdultas = posto!!.bikes.count { it.type == "adulto" }
@@ -157,6 +169,9 @@ fun DetalhesPostoScreen(
                         modifier = Modifier.size(48.dp) // Aumentei o tamanho do ícone
                     )
                 }
+
+                // Mapa do posto com coordenadas mockadas
+                PostoMap(latitude = postoCoordinates.latitude, longitude = postoCoordinates.longitude)
             }
         } else {
             Text(

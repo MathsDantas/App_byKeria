@@ -1,6 +1,7 @@
 package com.example.bykeria.ui.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,8 +11,10 @@ import com.example.bykeria.ui.pages.*
 
 @Composable
 fun AppNavigation(navController: NavHostController, settingsDataStore: SettingsDataStore) {
+    val context = LocalContext.current
+
     NavHost(navController = navController, startDestination = "splash") {
-        composable("splash") { SplashScreen(navController) }
+        composable("splash") { SplashScreen(navController, context = context) }
         composable("home_screen") { HomeScreen(navController) }
         composable("login_screen") { LoginScreen(navController, settingsDataStore) }
         composable("cadastro_screen") { CadastroScreen(navController) }
