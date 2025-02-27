@@ -22,12 +22,12 @@ import com.example.bykeria.R
 fun HomeScreen(navController: NavController) {
 
     Image(
-        painter = painterResource(id = R.drawable.homebg), // Substitua pelo nome da sua imagem
+        painter = painterResource(id = R.drawable.homebg),
         contentDescription = null,
-        contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
+        contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize()
     )
-    // Tela de boas-vindas com os botões
+
     Column(
         modifier = Modifier
             .fillMaxSize()

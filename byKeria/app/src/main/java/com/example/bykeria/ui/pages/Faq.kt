@@ -26,7 +26,7 @@ import com.example.bykeria.ui.components.MainScreenLayout
 fun FaqScreen(navController: NavController) {
     MainScreenLayout(navController = navController) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize()) {
-            // Imagem de fundo
+
             Image(
                 painter = painterResource(id = R.drawable.login),
                 contentDescription = null,
@@ -66,7 +66,7 @@ fun FAQ(navController: NavController, paddingValues: PaddingValues) {
             item { FaqItem("Qual o tempo limite para ficar com a bike?", "Recomendamos que você não passe mais de 3 dias com a bike") }
         }
 
-        // Texto antes da barra de pesquisa
+
         Text(
             text = "Não viu sua dúvida aqui? Nos escreva e vamos te responder!",
             fontSize = 14.sp,
@@ -74,7 +74,7 @@ fun FAQ(navController: NavController, paddingValues: PaddingValues) {
             modifier = Modifier.padding(top = 16.dp)
         )
 
-        // Barra de pesquisa
+
         val searchQuery = remember { mutableStateOf("") }
 
         Box(

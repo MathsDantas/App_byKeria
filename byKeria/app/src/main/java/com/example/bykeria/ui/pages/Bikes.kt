@@ -8,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -34,18 +32,18 @@ import com.example.bykeria.ui.components.MainScreenLayout
 
 @Composable
 fun BikesScreen(navController: NavController) {
-    val context = LocalContext.current // Obtém o contexto da composição
+    val context = LocalContext.current
     MainScreenLayout(navController = navController) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background), // Usando a cor do tema
+                .background(MaterialTheme.colorScheme.background),
             contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = painterResource(id = R.drawable.homebg),
                 contentDescription = null,
-                contentScale = ContentScale.Crop, // Ajusta a imagem para cobrir a tela
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
@@ -63,28 +61,28 @@ fun BikesScreen(navController: NavController) {
                     textAlign = TextAlign.Center
                 )
 
-                // Card para bikes para adultos
+
                 Card(
                     modifier = Modifier
                         .size(200.dp)
                         .clickable {
-                            navController.navigate("detalhe_bikesadu") // Navegação para "detalhesadu"
+                            navController.navigate("detalhe_bikesadu")
                         },
                     shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp) // Usando CardDefaults para definir a elevação
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
                 ) {
                     AndroidView(
                         factory = {
                             VideoView(context).apply {
-                                // Configuração do vídeo
+
                                 val videoUri = Uri.parse("android.resource://${context.packageName}/${R.raw.adultobike}")
                                 setVideoURI(videoUri)
                                 setOnPreparedListener { mediaPlayer ->
-                                    // Coloca o vídeo em loop
+
                                     mediaPlayer.isLooping = true
-                                    mediaPlayer.setVolume(0f, 0f)  // Define o volume do vídeo para 0 (sem som)
+                                    mediaPlayer.setVolume(0f, 0f)
                                 }
-                                start()  // Começa o vídeo automaticamente
+                                start()
                             }
                         },
                         modifier = Modifier
@@ -99,29 +97,29 @@ fun BikesScreen(navController: NavController) {
                     textAlign = TextAlign.Center
                 )
 
-                // Card para bikes para crianças
+
                 Card(
                     modifier = Modifier
                         .size(200.dp)
                         .clickable {
-                            navController.navigate("detalhe_bikeskid") // Navegação para "detalhesinf"
+                            navController.navigate("detalhe_bikeskid")
                         },
                     shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp) // Usando CardDefaults para definir a elevação
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
                 ) {
-                    // Usando o VideoView
+
                     AndroidView(
                         factory = {
                             VideoView(context).apply {
-                                // Configuração do vídeo
+
                                 val videoUri = Uri.parse("android.resource://${context.packageName}/${R.raw.kidbike}")
                                 setVideoURI(videoUri)
                                 setOnPreparedListener { mediaPlayer ->
-                                    // Coloca o vídeo em loop
+
                                     mediaPlayer.isLooping = true
-                                    mediaPlayer.setVolume(0f, 0f)  // Define o volume do vídeo para 0 (sem som)
+                                    mediaPlayer.setVolume(0f, 0f)
                                 }
-                                start()  // Começa o vídeo automaticamente
+                                start()
                             }
                         },
                         modifier = Modifier

@@ -1,6 +1,6 @@
 package com.example.bykeria.ui.components
 
-import androidx.activity.ComponentActivity
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -95,7 +95,7 @@ fun MainScreenLayout(navController: NavController, content: @Composable (Padding
                         )
                         DropdownMenuItem(
                             onClick = {
-                                expanded = false // Fecha o menu dropdown
+                                expanded = false
                                 CoroutineScope(Dispatchers.Main).launch {
                                     settingsDataStore.clearToken()
                                     navController.navigate("home_screen") {

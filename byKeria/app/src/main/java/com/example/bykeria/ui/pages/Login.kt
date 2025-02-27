@@ -24,9 +24,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     navController: NavController,
-    settingsDataStore: SettingsDataStore // Passar o SettingsDataStore como parâmetro
+    settingsDataStore: SettingsDataStore
 ) {
-    // Usar a LoginViewModelFactory para criar o ViewModel
+
     val viewModel: LoginViewModel = viewModel(
         factory = LoginViewModelFactory(settingsDataStore)
     )
@@ -124,12 +124,12 @@ fun LoginScreen(
                 }
             }
 
-            // Snackbar (Toast) no rodapé da tela
+
             SnackbarHost(
                 hostState = snackbarHostState,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 32.dp) // Ajuste para não colar na borda inferior
+                    .padding(bottom = 32.dp)
             )
         }
     }

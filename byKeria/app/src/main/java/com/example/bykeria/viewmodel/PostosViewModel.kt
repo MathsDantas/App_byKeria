@@ -34,15 +34,15 @@ class PostosViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
             dataStore.tokenFlow.collect { token ->
                 if (!token.isNullOrEmpty()) {
                     try {
-                        // Fazendo a requisição e passando o token para o header
+
                         val response = postoService.getPostos("Bearer $token")
 
-                        // Verifica se a resposta não é nula
+
                         if (response != null) {
-                            // Acessando corretamente o campo "data" da resposta
-                            _postos.value = response.data // response.data é a lista de Postos
+
+                            _postos.value = response.data
                         } else {
-                            _postos.value = emptyList() // Se não tiver resposta, usa lista vazia
+                            _postos.value = emptyList()
                         }
 
                     } catch (e: Exception) {
@@ -60,7 +60,7 @@ class PostosViewModel(private val dataStore: SettingsDataStore) : ViewModel() {
 }
 
 class PostosViewModelFactory(
-    private val settingsDataStore: SettingsDataStore // Corrigido para SettingsDataStore
+    private val settingsDataStore: SettingsDataStore
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PostosViewModel::class.java)) {

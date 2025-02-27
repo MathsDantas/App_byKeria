@@ -33,13 +33,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bykeria.R
-import com.example.bykeria.data.model.Postos
 import com.example.bykeria.data.network.RetrofitInstance
 import com.example.bykeria.ui.components.MainScreenLayout
 import com.example.bykeria.ui.components.PostoMap
 import com.example.bykeria.ui.components.SettingsDataStore
 import com.example.bykeria.ui.mocks.getMockCoordinates
-import com.example.bykeria.ui.mocks.postosList
 import com.example.bykeria.viewmodel.DetalhesPostoViewModel
 import com.example.bykeria.viewmodel.DetalhesPostoViewModelFactory
 import com.google.android.gms.maps.model.LatLng
@@ -64,7 +62,7 @@ fun DetalhesPostoScreen(
         postoId?.let { viewModel.fetchPostoDetalhes(it) }
     }
 
-    // Obter coordenadas mockadas com base no ID do posto
+
     val postoCoordinates = postoId?.let { getMockCoordinates(it) } ?: LatLng(0.0, 0.0)
 
     MainScreenLayout(navController = navController) { paddingValues ->
@@ -96,61 +94,61 @@ fun DetalhesPostoScreen(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Imagem do posto (proporção original)
+
                 Image(
                     painter = painterResource(R.drawable.posto2),
                     contentDescription = "Imagem do posto",
                     modifier = Modifier
-                        .fillMaxWidth() // Ocupa a largura máxima disponível
-                        .aspectRatio(344f / 130f) // Mantém a proporção original (344x130)
-                        .padding(vertical = 8.dp) // Espaçamento vertical menor
+                        .fillMaxWidth()
+                        .aspectRatio(344f / 130f)
+                        .padding(vertical = 8.dp)
                 )
 
-                Spacer(modifier = Modifier.padding(4.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(4.dp))
 
                 Text(
                     text = posto!!.nameUnidade,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 30.sp // Aumentei o tamanho da fonte
+                        fontSize = 30.sp
                     )
                 )
-                Spacer(modifier = Modifier.padding(8.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(8.dp))
 
                 Text(
                     text = posto!!.endereco,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 24.sp // Aumentei o tamanho da fonte
+                        fontSize = 24.sp
                     )
                 )
-                Spacer(modifier = Modifier.padding(8.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(8.dp))
 
-                // Quantidade de bikes adultas
+
                 val bikesAdultas = posto!!.bikes.count { it.type == "adulto" }
                 Text(
                     text = "Quantidade de bikes Adultas: $bikesAdultas",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 24.sp // Aumentei o tamanho da fonte
+                        fontSize = 24.sp
                     )
                 )
 
-                Spacer(modifier = Modifier.padding(8.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(8.dp))
 
-                // Quantidade de bikes infantis
+
                 val bikesInfantis = posto!!.bikes.count { it.type == "infantil" }
                 Text(
                     text = "Quantidade de bikes Infantis: $bikesInfantis",
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 24.sp // Aumentei o tamanho da fonte
+                        fontSize = 24.sp
                     )
                 )
 
-                Spacer(modifier = Modifier.padding(8.dp)) // Espaçamento menor
+                Spacer(modifier = Modifier.padding(8.dp))
 
-                // Botão de Favorito
+
                 val coroutineScope = rememberCoroutineScope()
                 val favorites by settingsDataStore.favoritePostos.collectAsState(initial = emptySet())
                 val isFavorite = postoId in favorites
@@ -166,11 +164,11 @@ fun DetalhesPostoScreen(
                         imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         contentDescription = "Favoritar Posto",
                         tint = if (isFavorite) Color.Red else Color.Gray,
-                        modifier = Modifier.size(48.dp) // Aumentei o tamanho do ícone
+                        modifier = Modifier.size(48.dp)
                     )
                 }
 
-                // Mapa do posto com coordenadas mockadas
+
                 PostoMap(latitude = postoCoordinates.latitude, longitude = postoCoordinates.longitude)
             }
         } else {

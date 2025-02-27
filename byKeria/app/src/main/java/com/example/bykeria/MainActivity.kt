@@ -22,14 +22,9 @@ import com.example.bykeria.ui.components.SettingsDataStore
 import com.example.bykeria.ui.components.SettingsViewModel
 import com.example.bykeria.ui.components.SettingsViewModelFactory
 import com.example.bykeria.ui.theme.YourAppTheme
-
 import android.Manifest
 import android.content.pm.PackageManager
 import android.util.Log
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import com.example.bykeria.viewmodel.LoginViewModel
 import com.example.bykeria.viewmodel.LoginViewModelFactory
 
@@ -38,13 +33,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Criar canal de notificações
+
         NotificationHelper.createNotificationChannel(this)
 
-        // Agendar notificações dos postos
+
         NotificationScheduler.schedulePostoNotifications(this)
 
-        // Solicitar permissão para notificações (Android 13+)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED
@@ -56,7 +51,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val context = LocalContext.current
             val settingsDataStore = SettingsDataStore(context)
-            AppContent(settingsDataStore) // Chamando o conteúdo da aplicação
+            AppContent(settingsDataStore)
         }
     }
 }
@@ -65,10 +60,10 @@ class MainActivity : ComponentActivity() {
 fun AppContent(settingsDataStore: SettingsDataStore) {
     val context = LocalContext.current
     val settingsViewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(context) // Passa o contexto para a Factory
+        factory = SettingsViewModelFactory(context)
     )
 
-    // Forneça um valor inicial para isDarkTheme
+
     val isDarkTheme by settingsViewModel.isDarkTheme.collectAsState(initial = false)
 
     YourAppTheme(darkTheme = isDarkTheme) {
@@ -77,13 +72,13 @@ fun AppContent(settingsDataStore: SettingsDataStore) {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            // Log para garantir que o LoginViewModel está sendo criado corretamente
+
             val LoginViewModel: LoginViewModel = viewModel(
                 factory = LoginViewModelFactory(settingsDataStore)
             )
             Log.d("AppContent", "LoginViewModel criado com sucesso")
 
-            AppNavigation(navController, settingsDataStore) // Passar o SettingsDataStore
+            AppNavigation(navController, settingsDataStore)
         }
     }
 }

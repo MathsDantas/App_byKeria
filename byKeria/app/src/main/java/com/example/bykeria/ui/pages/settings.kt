@@ -1,6 +1,6 @@
 package com.example.bykeria.ui.pages
 
-import android.content.Context
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.bykeria.R
 import com.example.bykeria.ui.components.MainScreenLayout
@@ -23,25 +22,25 @@ import com.example.bykeria.ui.theme.YourAppTheme
 
 @Composable
 fun SettingsScreen(navController: NavHostController) {
-    // Obter o contexto
+
     val context = LocalContext.current
 
-    // Criar o ViewModel usando o contexto
+
     val viewModel: SettingsViewModel = viewModel(
         factory = SettingsViewModelFactory(context)
     )
 
-    // Obter o estado do tema escuro
+
     val isDarkTheme by viewModel.isDarkTheme.collectAsState(initial = false)
 
-    // Obter o estado do modo automático
+
     val isAutoTheme by viewModel.isAutoTheme.collectAsState(initial = false)
 
-    // Definir o tema com base no modo automático ou manual
+
     val currentTheme = if (isAutoTheme) {
-        viewModel.isNightTime() // Verifica o horário do sistema
+        viewModel.isNightTime()
     } else {
-        isDarkTheme // Usa o tema manual
+        isDarkTheme
     }
 
     MainScreenLayout(navController = navController) { paddingValues ->
@@ -53,7 +52,7 @@ fun SettingsScreen(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        // A imagem de fundo
+
                         Image(
                             painter = painterResource(id = R.drawable.login),
                             contentDescription = null,
@@ -61,14 +60,14 @@ fun SettingsScreen(navController: NavHostController) {
                             modifier = Modifier.fillMaxSize()
                         )
 
-                        // Conteúdo da tela
+
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(paddingValues)
                                 .padding(16.dp)
                         ) {
-                            // Switch para o modo automático
+
                             Text(
                                 text = "Modo Automático",
                                 style = MaterialTheme.typography.bodyLarge,
@@ -88,17 +87,17 @@ fun SettingsScreen(navController: NavHostController) {
                                     onCheckedChange = {
                                         viewModel.setAutoTheme(it)
                                         if (it) {
-                                            // Desabilita o switch manual quando o modo automático é ativado
+
                                             viewModel.setDarkTheme(viewModel.isNightTime())
                                         }
                                     },
-                                    enabled = true // O switch do modo automático nunca deve ser desabilitado
+                                    enabled = true
                                 )
                             }
 
                             Spacer(modifier = Modifier.padding(16.dp))
 
-                            // Switch para o tema escuro/claro manual
+
                             Text(
                                 text = "Modo de Cor",
                                 style = MaterialTheme.typography.bodyLarge,

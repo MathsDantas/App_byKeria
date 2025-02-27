@@ -21,12 +21,12 @@ interface AuthService {
     @POST("users")
     fun createUser(@Body user: UserRequest): Call<Void>
 
-    @GET("postos") // Rota para obter todos os postos
+    @GET("postos")
     suspend fun getPostos(@Header("Authorization") authHeader: String): PostosResponse
 
-    @GET("postos/{id}") // Rota para obter os detalhes de um posto específico
+    @GET("postos/{id}")
     suspend fun getPostoById(
         @Path("id") id: Int,
         @Header("Authorization") authHeader: String
-    ): Response<PostoDetalhesResponse> // Adicione uma classe de resposta para os detalhes do posto
+    ): Response<PostoDetalhesResponse>
 }

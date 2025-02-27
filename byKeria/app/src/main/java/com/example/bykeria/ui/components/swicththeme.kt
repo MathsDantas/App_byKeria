@@ -13,11 +13,11 @@ fun AppWithThemeToggle() {
     var isDarkTheme by remember { mutableStateOf(false) }
 
     YourAppTheme(darkTheme = isDarkTheme) {
-        // Switch para alternar entre os temas
+
         Switch(
             checked = isDarkTheme,
             onCheckedChange = { isDarkTheme = it }
         )
-        // Resto da sua interface
+
     }
 }

@@ -30,7 +30,7 @@ fun BikesAduListItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-// Imagem e título
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     painter = painterResource(id = bike.imageRes),

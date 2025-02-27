@@ -1,7 +1,7 @@
 package com.example.bykeria.ui.pages
 
 
-import android.widget.Toast
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bykeria.R
 import com.example.bykeria.data.model.CadastroViewModel
-import com.example.bykeria.ui.theme.YourAppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

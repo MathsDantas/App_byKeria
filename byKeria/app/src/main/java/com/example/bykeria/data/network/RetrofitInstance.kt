@@ -16,7 +16,7 @@ object RetrofitInstance {
 
     val api: AuthService by lazy {
         Retrofit.Builder()
-            .baseUrl("https://backend-bykeria.onrender.com/") // URL base
+            .baseUrl("https://backend-bykeria.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
